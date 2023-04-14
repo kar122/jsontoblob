@@ -22,4 +22,5 @@ jobs:
            RESOURCE_GROUP_NAME="aksumma"
            STORAGE_ACCOUNT_NAME="aksummasa"
            CONTAINER_NAME="container"
-           az storage blob upload-batch --destination "$container" --account-name "$aksummasa" --account-key "EHgYO+PteTD3ffty2emylBZBr4Rwsh6f969wyEHUU8gcrSiCyzpriDsRw6qJsm7BBLbT4QoaJct0+ASt60X4Qw==" --source-path https://raw.githubusercontent.com/kar122/jsontoblob/blob/main/scenarios.json --pattern "*.json"
+           SOURCE_PATH="https://raw.githubusercontent.com/kar122/jsontoblob/main/scenarios.json"
+           az storage blob upload-batch --destination "$CONTAINER_NAME" --account-name "$STORAGE_ACCOUNT_NAME" --account-key "EHgYO+PteTD3ffty2emylBZBr4Rwsh6f969wyEHUU8gcrSiCyzpriDsRw6qJsm7BBLbT4QoaJct0+ASt60X4Qw==" --source-path "$SOURCE_PATH" --pattern "*.json"
