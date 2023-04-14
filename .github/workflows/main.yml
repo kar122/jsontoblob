@@ -23,4 +23,4 @@ jobs:
            STORAGE_ACCOUNT_NAME="aksummasa"
            CONTAINER_NAME="container"
            SOURCE_PATH="https://raw.githubusercontent.com/kar122/jsontoblob/main/scenarios.json"
-           az storage blob upload --account-name "aksummasa" --account-key "EHgYO+PteTD3ffty2emylBZBr4Rwsh6f969wyEHUU8gcrSiCyzpriDsRw6qJsm7BBLbT4QoaJct0+ASt60X4Qw==" --container-name container --name scenarios.json --type block --source "https://raw.githubusercontent.com/kar122/jsontoblob/main/scenarios.json"
+           az storage blob upload --account-name "aksummasa" --account-key "EHgYO+PteTD3ffty2emylBZBr4Rwsh6f969wyEHUU8gcrSiCyzpriDsRw6qJsm7BBLbT4QoaJct0+ASt60X4Qw==" --container-name "container" --name "file.json" --type page --source-path "https://raw.githubusercontent.com/kar122/jsontoblob/main/scenarios.json"
