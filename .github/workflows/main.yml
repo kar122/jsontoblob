@@ -23,4 +23,4 @@ jobs:
           git clone https://github.com/visionify/visionai.git
           cd visionai
           git checkout main
-          az storage blob copy start-batch --destination-container container --destination-blob scenario.json --account-name aksummasa --account-key EHgYO+PteTD3ffty2emylBZBr4Rwsh6f969wyEHUU8gcrSiCyzpriDsRw6qJsm7BBLbT4QoaJct0+ASt60X4Qw== --source-uri https://github.com/kar122/jsontoblob/raw/main/scenarios.json
+          az storage blob copy start-batch --destination-container container --destination-blob scenario --destination-blob-type BlockBlob --account-name aksummasa --account-key EHgYO+PteTD3ffty2emylBZBr4Rwsh6f969wyEHUU8gcrSiCyzpriDsRw6qJsm7BBLbT4QoaJct0+ASt60X4Qw== --source-uri https://github.com/kar122/jsontoblob/raw/main/scenarios.json
