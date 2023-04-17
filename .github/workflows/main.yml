@@ -1,10 +1,12 @@
-name: Transfer to Azure Blob Storage
+name: Transfer and Sync to Azure Blob Storage
+
 on:
   push:
     branches:
       - main
+
 jobs:
-  transfer:
+  transfer-to-azure-blob-storage:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,3 +19,28 @@ jobs:
           container_name: container
           local_path: ./scenarios.json
           blob_path: /container/myblob.json
+
+  sync-to-azure-blob-storage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Sync to Azure Blob Storage
+        uses: azure/cli@v1.0.0
+        with:
+          inlineScript: |
+            # Authenticate to Azure
+            az login --service-principal -u ${{ secrets.servicePrincipalCredentials}} -p ${{ secrets.servicePrincipalCredentials}} --tenant ${{ secrets.servicePrincipalCredentials }}
+            # Clone the visionai repository to the agent
+            git clone https://github.com/visionify/visionai.git
+            # Switch to the main branch
+            cd visionai
+            git checkout main
+            # Sync the scenario.json file to the container
+            az storage blob upload --destination-path /container/myblob.json --source ./scenarios.json --account-name aksummasa --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+        env:
+          servicePrincipalId: ${{ secrets.servicePrincipalCredentials }}
+          servicePrincipalKey: ${{ secrets.servicePrincipalCredentials }}
+          tenantId: ${{ secrets.servicePrincipalCredentials }}
