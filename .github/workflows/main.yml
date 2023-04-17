@@ -9,24 +9,24 @@ jobs:
   copy_file:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Azure File Copy
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.64
-        inlineScript: |
-          az storage blob copy start-batch \
-            --destination-container "container" \
-            --destination-path "https://aksummasa.blob.core.windows.net/container" \
-            --source-uri "https://github.com/kar122/jsontoblob/raw/main/scenarios.json" \
-            --account-name "aksummasa" \
-            --output "json"
-      env:
-        AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+      - name: Azure File Copy
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.0.64
+          inlineScript: |
+            az storage blob copy start-batch \
+              --destination-container "container" \
+              --destination-path "scenario.json" \
+              --source-uri "https://github.com/kar122/jsontoblob/raw/main/scenarios.json" \
+              --account-name "aksummasa"
+          output: json
+        env:
+          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
