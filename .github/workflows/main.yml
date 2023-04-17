@@ -1,4 +1,4 @@
-name: Transfer and Sync to Azure Blob Storage
+name: Copy file to Azure Blob Storage
 
 on:
   push:
@@ -6,21 +6,26 @@ on:
       - main
 
 jobs:
-  sync-to-azure-blob-storage:
+  copy_file:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Sync to Azure Blob Storage
-        env:
-          servicePrincipalId: ${{ secrets.SERVICE_PRINCIPAL_ID }}
-          servicePrincipalKey: ${{ secrets.SERVICE_PRINCIPAL_KEY }}
-          tenantId: ${{ secrets.TENANT_ID }}
-        run: |
-          az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
-          git clone https://github.com/visionify/visionai.git
-          cd visionai
-          git checkout main
-          az storage blob copy start-batch --destination-container container --destination-blob scenario.json --destination-blob-type BlockBlob --account-name aksummasa --account-key EHgYO+PteTD3ffty2emylBZBr4Rwsh6f969wyEHUU8gcrSiCyzpriDsRw6qJsm7BBLbT4QoaJct0+ASt60X4Qw== --source-uri https://github.com/kar122/jsontoblob/raw/main/scenarios.json
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure File Copy
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.64
+        inlineScript: |
+          az storage blob copy start-batch \
+            --destination-container "container" \
+            --destination-path "https://aksummasa.blob.core.windows.net/container" \
+            --source-uri "https://github.com/kar122/jsontoblob/raw/main/scenarios.json" \
+            --account-name "aksummasa"
+      env:
+        AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
