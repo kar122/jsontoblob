@@ -6,21 +6,6 @@ on:
       - main
 
 jobs:
-  transfer-to-azure-blob-storage:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Transfer to Azure Blob Storage
-        uses: Azure/blobxfer@1.5.5
-        with:
-          storage_account: aksummasa
-          storage_account_key: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
-          container_name: container
-          local_path: ./scenarios.json
-          blob_path: /container/myblob.json
-
   sync-to-azure-blob-storage:
     runs-on: ubuntu-latest
 
@@ -30,11 +15,11 @@ jobs:
 
       - name: Sync to Azure Blob Storage
         env:
-          servicePrincipalId: ${{ secrets.servicePrincipalId }}
-          servicePrincipalKey: ${{ secrets.servicePrincipalKey }}
-          tenantId: ${{ secrets.tenantId }}
+          servicePrincipalId: ${{ secrets.SERVICEPRINCIPALID }}
+          servicePrincipalKey: ${{ secrets.SERVICEPRINCIPALKEY }}
+          tenantId: ${{ secrets.TENANTID }}
         run: |
-          az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
+          az login --service-principal -u $SERVICEPRINCIPALID -p $SERVICEPRINCIPALKEY --tenant $TENANTID
           git clone https://github.com/visionify/visionai.git
           cd visionai
           git checkout main
