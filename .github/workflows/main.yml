@@ -15,11 +15,11 @@ jobs:
 
       - name: Sync to Azure Blob Storage
         env:
-          servicePrincipalId: ${{ secrets.SERVICEPRINCIPALID }}
-          servicePrincipalKey: ${{ secrets.SERVICEPRINCIPALKEY }}
-          tenantId: ${{ secrets.TENANTID }}
+          servicePrincipalId: ${{ secrets.SERVICE_PRINCIPAL_ID }}
+          servicePrincipalKey: ${{ secrets.SERVICE_PRINCIPAL_KEY }}
+          tenantId: ${{ secrets.TENANT_ID }}
         run: |
-          az login --service-principal -u $SERVICEPRINCIPALID -p $SERVICEPRINCIPALKEY --tenant $TENANTID
+          az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
           git clone https://github.com/visionify/visionai.git
           cd visionai
           git checkout main
