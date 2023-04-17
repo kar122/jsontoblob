@@ -27,6 +27,6 @@ jobs:
             --destination-path "https://aksummasa.blob.core.windows.net/container" \
             --source-uri "https://github.com/kar122/jsontoblob/raw/main/scenarios.json" \
             --account-name "aksummasa" \
-            --output ".json"
+            --output "json"
       env:
         AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
